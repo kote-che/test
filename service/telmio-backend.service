@@ -1,1 +1,15 @@
-none
+[Unit]
+Description=Telmio backend
+After=data.mount systemd-tmpfiles-setup.service
+
+[Service]
+LimitNOFILE=700000
+Type=simple
+#PIDFile=/data/telmio-data/telmio-backend.pid
+ExecStart=/bin/bash /home/athuser/telmio-backend/telmio-backend.sh
+ExecStop=/usr/bin/cat /data/telmio-data/telmio-backend.pid|/usr/bin/xargs kill -9
+KillMode=mixed
+User=athuser
+
+[Install]
+WantedBy=multi-user.target
